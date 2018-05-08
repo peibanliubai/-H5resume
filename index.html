@@ -25,7 +25,35 @@
    <!-- <script src="js/swiper-3.4.2.jquery.min.js"></script>-->
     <script src="js/swiper.animate1.0.2.min.js"></script>
     <script type="text/javascript">
-        document.documentElement.style.fontSize = document.documentElement.clientWidth / 640 * 100 + "px";
+           ;
+    (function(win) {
+        var doc = win.document;
+        var docEl = doc.documentElement;
+        var tid;
+
+        function refreshRem() {
+            var width = docEl.getBoundingClientRect().width;
+            if (width > 540) { // 最大宽度
+                width = 540;
+            }
+            var rem = width / 6.4;
+            docEl.style.fontSize = rem + 'px';
+        }
+
+        win.addEventListener('resize', function() {
+            clearTimeout(tid);
+            tid = setTimeout(refreshRem, 300);
+        }, false);
+        win.addEventListener('pageshow', function(e) {
+            if (e.persisted) {
+                clearTimeout(tid);
+                tid = setTimeout(refreshRem, 300);
+            }
+        }, false);
+
+        refreshRem();
+
+    })(window);
     </script>
 </head>
 <body>
